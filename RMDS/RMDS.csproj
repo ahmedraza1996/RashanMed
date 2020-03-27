@@ -174,11 +174,24 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\DonationDetails.cs" />
+    <Compile Include="Models\DonationType.cs" />
+    <Compile Include="Models\ReceiveDetail.cs" />
+    <Compile Include="Models\Rider.cs" />
+    <Compile Include="Models\RiderDeliver.cs" />
+    <Compile Include="Models\RiderDonation.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserDonation.cs" />
+    <Compile Include="Models\UserPersonalInfo.cs" />
+    <Compile Include="Models\userReceiver.cs" />
+    <Compile Include="Models\UserType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\BaseManager.cs" />
     <Compile Include="Shared\Constants.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-flatly.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -217,7 +230,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

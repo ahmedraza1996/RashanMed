@@ -11,12 +11,17 @@ namespace RMDS.Controllers
     {
 
 
-        [HttpGet]
-        public HttpResponseMessage GetPendingDonation()
-        {
+       
+        //public HttpResponseMessage GetPendingDonation()
+        //{
 
 
-        }
+        //}
+        //user personal info
+        //donation list pending
+        //assigndonationto rider
+        //add rider
+
 
 
     }

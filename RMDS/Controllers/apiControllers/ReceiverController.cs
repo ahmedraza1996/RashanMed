@@ -9,19 +9,20 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-
+using static RMDS.Shared.Constants;
 namespace RMDS.Controllers
 {
     public class ReceiverController : ApiController
     {
+        
 
         [HttpPost]
         public HttpResponseMessage RequestDonation(Object Donation)
         {
             var test = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(Convert.ToString(Donation));
-            object DonationDesc;
-            test.TryGetValue("ReqDesc", out DonationDesc);
-            string _DonationDesc = DonationDesc.ToString();
+            object ReceiveDetail;
+            test.TryGetValue("ReceiveDetail", out ReceiveDetail);
+            string _ReceiveDetail = ReceiveDetail.ToString();
             object DropLat;
             test.TryGetValue("DropLat", out DropLat);
             double _DropLat = Convert.ToDouble(DropLat);
@@ -30,7 +31,11 @@ namespace RMDS.Controllers
             double _DropLng = Convert.ToDouble(Droplng);
             object DonationTypeId;
             test.TryGetValue("DonationTypeId", out DonationTypeId);
-            int _DonationTypeId = Convert.ToInt32(DonationTypeId);
+            int _TypeId = Convert.ToInt32(DonationTypeId);
+            object UserId;
+            test.TryGetValue("UserId", out UserId);
+            int _UserId = Convert.ToInt32(UserId);
+
 
             var connection = new MySqlConnection(ConfigurationManager.AppSettings["MySqlDBConn"].ToString());
             var compiler = new MySqlCompiler();
@@ -43,14 +48,15 @@ namespace RMDS.Controllers
                     Dictionary<string, object> RequestObj = new Dictionary<string, object>()
                     {
                         {"RequestDate",DateTime.Now.Date },
-                        {"ReqDesc", _DonationDesc},
+                        {"UserId", _UserId},
                         {"DropLat",_DropLat },
                         {"Droplng",_DropLng },
-                        {"DonationTypeId",Donation  }
+                        {"TypeId",Donation  },
+                        {"RequestStatus",  ReqStatusPending}
                     };
 
 
-                    var res = db.Query("userDonation").Insert(RequestObj);  //lastinsertedid
+                    var res = db.Query("userReceiver").Insert(RequestObj);  //lastinsertedid
                     scope.Commit();
                     return Request.CreateResponse(HttpStatusCode.Created, new Dictionary<string, int>() { { "RequestId", res } });
                 }

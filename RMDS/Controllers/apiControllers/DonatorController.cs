@@ -19,9 +19,9 @@ namespace RMDS.Controllers
         public HttpResponseMessage Donate(Object Donation)
         {
             var test = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(Convert.ToString(Donation));
-            object DonationDesc;
-            test.TryGetValue("DonationDesc", out DonationDesc);
-            string _DonationDesc = DonationDesc.ToString();
+            object DonationDetails;
+            test.TryGetValue("DonationDetails", out DonationDetails);
+           
             object PickUpLat;
             test.TryGetValue("PickUpLat", out PickUpLat);
             double _PickUpLat = Convert.ToDouble(PickUpLat);
@@ -31,7 +31,9 @@ namespace RMDS.Controllers
             object UserId;
             test.TryGetValue("UserId", out UserId);
             int _UserId = Convert.ToInt32 (UserId);
-
+            object TypeId;
+            test.TryGetValue("TypeId", out TypeId);
+            int _TypeId = Convert.ToInt32(TypeId);
 
             var connection = new MySqlConnection(ConfigurationManager.AppSettings["MySqlDBConn"].ToString());
             var compiler = new MySqlCompiler();
@@ -44,14 +46,24 @@ namespace RMDS.Controllers
                     Dictionary<string, object> DonationObj = new Dictionary<string, object>()
                     {
                         {"RequestDate",DateTime.Now.Date },
-                        {"DonationDesc", _DonationDesc},
+                        {"TypeId", _TypeId },
+                        {"UserId", _UserId },
                         {"PickUpLat",_PickUpLat },
                         {"PickUpLng",_PickUpLng },
-                        {"DonationStatusId",DonationStatusPending  }
+                        {"DonationStatus",DonationStatusPending  }
+                        //donationdetails
                     };
 
 
                     var res = db.Query("userDonation").Insert(DonationObj);  //lastinsertedid
+                    List<Dictionary<string, object>> _DonationDetails = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(DonationDetails.ToString());
+
+                    foreach ( var item in _DonationDetails)
+                    {
+                        item.Add("DonationID", res);
+                    }
+
+
                     scope.Commit();
                     return Request.CreateResponse(HttpStatusCode.Created, new Dictionary<string, int>() { { "DonationId", res } });
                 }
