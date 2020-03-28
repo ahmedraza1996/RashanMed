@@ -7,5 +7,8 @@ namespace RMDS.Models
 {
     public class DonationType
     {
+        public int TypeID { get; set; }
+        public string TypeName { get; set; }
+
     }
 }

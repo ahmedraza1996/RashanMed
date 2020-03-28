@@ -7,5 +7,6 @@ namespace RMDS.Models
 {
     public class ReceiveDetail
     {
+
     }
 }
