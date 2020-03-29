@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RMDS.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -39,10 +40,10 @@ namespace RMDS.Controllers
         {
             string ret = Shared.Constants.MSG_ERR_NOUSEREXIST.Text;
             string whereclause = "EMAIL='" + username + "'" + "or username='" + username + "'";
-            List<Admin> lstAdmin = NGOmemberManager.GetNGOmember(whereclause, null);
+            List<Admin> lstAdmin =AdminManager.GetAdmin(whereclause, null);
             if (lstAdmin.Count > 0)
             {
-                if (lstAdmin.First().PASSWORD.Equals(password))
+                if (lstAdmin.First().APASSWORD.Equals(password))
                 {
                     SetSessionAdmin(lstAdmin.First());
                     ret = Shared.Constants.MSG_SUCCESS.Text;
@@ -55,6 +56,20 @@ namespace RMDS.Controllers
             }
             return ret;
 
+        }
+        public Admin GetSessionAdmin()
+        {
+            if (Session[Shared.Constants.SESSION_ADMIN] != null)
+            {
+                return Session[Shared.Constants.SESSION_ADMIN] as Admin;
+            }
+
+            return null;
+        }
+
+        public void SetSessionAdmin(Admin obj)
+        {
+            Session[Shared.Constants.SESSION_ADMIN] = obj;
         }
 
     }

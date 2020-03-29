@@ -170,6 +170,7 @@
     <Compile Include="Controllers\apiControllers\DonatorController.cs" />
     <Compile Include="Controllers\apiControllers\HomeController.cs" />
     <Compile Include="Controllers\apiControllers\ReceiverController.cs" />
+    <Compile Include="Controllers\BasicAuthenticationAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -185,6 +186,7 @@
     <Compile Include="Models\UserDonation.cs" />
     <Compile Include="Models\UserPersonalInfo.cs" />
     <Compile Include="Models\userReceiver.cs" />
+    <Compile Include="Models\UserService.cs" />
     <Compile Include="Models\UserType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\BaseManager.cs" />
@@ -203,6 +205,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

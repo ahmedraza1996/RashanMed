@@ -11,4 +11,5 @@ namespace RMDS.Models
         public string TypeName { get; set; }
 
     }
+
 }

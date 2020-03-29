@@ -8,17 +8,29 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Http;
 using static RMDS.Shared.Constants;
 namespace RMDS.Controllers
 {
+    [BasicAuthentication]
     public class ReceiverController : ApiController
     {
         
+        [HttpGet]
+        public HttpResponseMessage CheckAuthGet()
+        {
+            string username = Thread.CurrentPrincipal.Identity.Name;
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+        
 
         [HttpPost]
-        public HttpResponseMessage RequestDonation(Object Donation)
-        {
+        public HttpResponseMessage RequestDonation(Object Donation) { 
+
+
+           // string username = Thread.CurrentPrincipal.Identity.Name;
             var test = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(Convert.ToString(Donation));
             object ReceiveDetail;
             test.TryGetValue("ReceiveDetail", out ReceiveDetail);

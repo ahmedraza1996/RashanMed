@@ -18,7 +18,7 @@ namespace RMDS.Models
        
     }
 
-    public class AdnminManager : BaseManager
+    public class AdminManager : BaseManager
     {
         public static List<Admin> GetAdmin(string whereclause, MySqlConnection conn = null)
         {

@@ -10,6 +10,7 @@ namespace RMDS.App_Start
     {
         public static void Register(HttpConfiguration config)
         {
+       
             // Web API routes
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
@@ -23,6 +24,7 @@ namespace RMDS.App_Start
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.SuppressHostPrincipal();
         }
     }
 }

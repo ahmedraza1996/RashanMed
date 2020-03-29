@@ -13,9 +13,12 @@ using static RMDS.Shared.Constants;
 
 namespace RMDS.Controllers
 {
+
+    [BasicAuthentication]
     public class DonatorController : ApiController
     {
         [HttpPost]
+
         public HttpResponseMessage Donate(Object Donation)
         {
             var test = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(Convert.ToString(Donation));
