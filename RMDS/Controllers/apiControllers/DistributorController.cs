@@ -14,7 +14,7 @@ using static RMDS.Shared.Constants;
 namespace RMDS.Controllers
 {
     [BasicAuthentication]
-    public class ReceiverController : ApiController
+    public class DistributorController : ApiController
     {
         
         [HttpGet]
@@ -32,15 +32,11 @@ namespace RMDS.Controllers
 
            // string username = Thread.CurrentPrincipal.Identity.Name;
             var test = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(Convert.ToString(Donation));
-            object ReceiveDetail;
-            test.TryGetValue("ReceiveDetail", out ReceiveDetail);
-            string _ReceiveDetail = ReceiveDetail.ToString();
-            object DropLat;
-            test.TryGetValue("DropLat", out DropLat);
-            double _DropLat = Convert.ToDouble(DropLat);
-            object Droplng;
-            test.TryGetValue("Droplng", out Droplng);
-            double _DropLng = Convert.ToDouble(Droplng);
+            object NumberOfPeople;
+            test.TryGetValue("NumberOfPeople", out NumberOfPeople);
+            int _NumberOfPeople = Convert.ToInt32(NumberOfPeople);
+           
+
             object DonationTypeId;
             test.TryGetValue("DonationTypeId", out DonationTypeId);
             int _TypeId = Convert.ToInt32(DonationTypeId);
@@ -61,16 +57,15 @@ namespace RMDS.Controllers
                     {
                         {"RequestDate",DateTime.Now.Date },
                         {"UserId", _UserId},
-                        {"DropLat",_DropLat },
-                        {"Droplng",_DropLng },
-                        {"TypeId",Donation  },
-                        {"RequestStatus",  ReqStatusPending}
+                        {"DonationTypeId",DonationTypeId  },
+                        {"RequestStatus",  ReqStatusPending},
+                        {"NumberOfPeople", _NumberOfPeople }
                     };
 
 
-                    var res = db.Query("userReceiver").Insert(RequestObj);  //lastinsertedid
+                    var res = db.Query("DistributorRequest").Insert(RequestObj);  //lastinsertedid
                     scope.Commit();
-                    return Request.CreateResponse(HttpStatusCode.Created, new Dictionary<string, int>() { { "RequestId", res } });
+                    return Request.CreateResponse(HttpStatusCode.Created, new Dictionary<string, int>() { { "Data", res } });
                 }
                 catch (Exception ex)
                 {

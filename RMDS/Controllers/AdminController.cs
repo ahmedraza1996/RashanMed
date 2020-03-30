@@ -14,15 +14,6 @@ namespace RMDS.Controllers
 
 
 
-        //public HttpResponseMessage GetPendingDonation()
-        //{
-
-
-        //}
-        //user personal info
-        //donation list pending
-        //assigndonationto rider
-        //add rider
 
         public ActionResult Login()
 
@@ -31,31 +22,34 @@ namespace RMDS.Controllers
             if (Session[Shared.Constants.SESSION_ADMIN] != null)
             {
 
-                return RedirectToAction("Index");
+                return RedirectToAction("GetAllPendingDonation");
             }
             return View();
         }
         [HttpPost]
-        public string Login(string username, string password)
+        public ActionResult Login(Admin obj)
         {
             string ret = Shared.Constants.MSG_ERR_NOUSEREXIST.Text;
-            string whereclause = "EMAIL='" + username + "'" + "or username='" + username + "'";
+
+            string whereclause = "EMAIL='" + obj.EMAIL + "'" + "or username='" + obj.EMAIL + "'";
             List<Admin> lstAdmin =AdminManager.GetAdmin(whereclause, null);
             if (lstAdmin.Count > 0)
             {
-                if (lstAdmin.First().APASSWORD.Equals(password))
+                if (lstAdmin.First().APASSWORD.Equals(obj.APASSWORD))
                 {
                     SetSessionAdmin(lstAdmin.First());
                     ret = Shared.Constants.MSG_SUCCESS.Text;
-
+                    
                 }
                 else
                 {
                     ret = Shared.Constants.MSG_ERR_INVALIDCRED.Text;
                 }
             }
-            return ret;
-
+            if (ret.Equals(Shared.Constants.MSG_SUCCESS.Text))
+                return RedirectToAction("GetAllPendingDonation");
+            else 
+                return RedirectToAction("Login");
         }
         public Admin GetSessionAdmin()
         {
@@ -72,5 +66,178 @@ namespace RMDS.Controllers
             Session[Shared.Constants.SESSION_ADMIN] = obj;
         }
 
+        public ActionResult GetAllPendingDonation()
+        {
+            if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
+
+                return RedirectToAction("Login");
+            }
+            // select * from userdonation d, user u  where d.donationstatus='pending ' and d.userid= u.userid
+            List<UserDonation> lstDonation = UserDonationManager.GetPendingDonation("", null);
+
+            return View("PendingDonations",lstDonation);
+
+        }
+        public ActionResult GetAllDonations()
+        {
+            if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
+
+                return RedirectToAction("Login");
+            }
+            // select * from userdonation d, user u  where d.donationstatus='pending ' and d.userid= u.userid
+            List<UserDonation> lstDonation = UserDonationManager.GetAll("", null);
+
+            return View( lstDonation);
+
+        }
+        public ActionResult GetDonationDetails(string id)
+        {   if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
+
+                return RedirectToAction("Login");
+            }
+            List<DonationDetails> lstDonation = DonationDetailManager.GetDonationDetails("donationid='"+id+"'", null);
+
+            return View(lstDonation);
+        }
+        public ActionResult GetUserDetail(string id)
+        {   if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
+
+                return RedirectToAction("Login");
+            }
+            List<User> lstUser = UserManager.GetUser("userid='" + id + "'", null);
+
+            return View(lstUser.First());
+        }
+        public ActionResult EditDonation(string id)
+        {
+            if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
+
+                return RedirectToAction("Login");
+            }
+            List<UserDonation> lstDonation = UserDonationManager.GetUserDonation("DonationID='" + id + "'", null);
+
+            return View(lstDonation.First());
+
+        }
+        [HttpPost]
+
+        public ActionResult EditDonation(UserDonation obj)
+        {
+            if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
+
+                return RedirectToAction("Login");
+            }
+
+            string ret = Shared.Constants.MSG_ERR_NOUSEREXIST.Text;
+            ret = UserDonationManager.SaveUserDonation(obj);
+            if (ret.Equals(Shared.Constants.MSG_OK_DBSAVE.Text))
+            {
+                return RedirectToAction("GetAllPendingDonation", "Admin");
+
+            }
+            return RedirectToAction("EditDonation", "Admin");
+
+
+        }
+        public ActionResult AddRider()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddRider(Rider objRider)
+        {
+            if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
+
+                return RedirectToAction("Login");
+            }
+
+            string ret = Shared.Constants.MSG_ERR_NOUSEREXIST.Text;
+            ret = RiderManager.SaveRider(objRider);
+            if (ret.Equals(Shared.Constants.MSG_OK_DBSAVE.Text))
+            {
+                return RedirectToAction("GetRiders", "Admin");
+
+            }
+            return RedirectToAction("AddRider", "Admin");
+            
+        }
+        public ActionResult GetRiders()
+        {
+            if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
+
+                return RedirectToAction("Login");
+            }
+
+            List<Rider> lstRider = RiderManager.GetRider("",null);
+
+            return View("Riders", lstRider);
+        }
+        public ActionResult GetAllDonator()
+        
+        {
+            if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
+
+                return RedirectToAction("Login");
+            }
+            List<User> lstDonators = UserManager.GetUser("UserTypeId=1");
+
+            return View("Donators",lstDonators);
+
+        }
+        
+        public ActionResult GetAllDistributors()
+        {
+            if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
+
+                return RedirectToAction("Login");
+            }
+            List<User> lstDistributors = UserManager.GetUser("UserTypeId=2");
+
+            return View("Distributors", lstDistributors);
+        }
+
+
+        public ActionResult GetDistributionRequest()
+        {
+            if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
+
+                return RedirectToAction("Login");
+            }
+            // select * from userdonation d, user u  where d.donationstatus='pending ' and d.userid= u.userid
+            List<DistributorRequest> lstDist = DistributorRequestManager.GetDistributionRequest("RequestStatus='Pending'", null);
+
+            return View(lstDist);
+
+           
+        }
+
+        public ActionResult SignOut()
+        {
+
+                SetSessionAdmin(null);
+
+                return RedirectToAction("Login", "Admin");
+            
+        }
+        //public ActionResult AddDistributor()
+        //{
+
+        //}
+
+        //public ActionResult AddDonator()
+        //{
+
+        //}
     }
 }

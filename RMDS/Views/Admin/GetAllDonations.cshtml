@@ -1,0 +1,70 @@
+﻿@model IEnumerable<RMDS.Models.UserDonation>
+
+@{
+    ViewBag.Title = "Pending Donations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>All Dontaions</h2>
+
+
+<p>
+    @Html.ActionLink("View Pending Donations", "GetAllPendingDonation")
+</p>
+<table class="table table-responsive table-striped  table-hover">
+    <thead class="thead" style="background-color:aquamarine">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.RequestDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonationStatus)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.UserFullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonationType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonationStatus)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.UserFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonationType)
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => item.DonationID)
+            </td>
+            <td>
+                @Html.ActionLink("Donation Details", "GetDonationDetails", new { id = item.DonationID }) |
+                @Html.ActionLink("Donator Details", "GetUserDetail", new { id = item.UserId }) |
+                @Html.ActionLink("Edit Status", "EditDonation", new { id = item.DonationID })
+            </td>
+        </tr>
+
+    }
+
+</table>

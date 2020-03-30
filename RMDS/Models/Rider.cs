@@ -2,6 +2,8 @@
 using RMDS.Shared;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -11,10 +13,22 @@ namespace RMDS.Models
     public class Rider
     {
         public int RIDERID { get; set; }
+        [DisplayName("Full Name")]
+        [Required(ErrorMessage = "Full Name is Required")]
         public string FULLNAME { get; set; }
+        [StringLength(13,MinimumLength =13,  ErrorMessage ="CNIC must be 13 digits long")]
+        [Required(ErrorMessage = "CNIC is Required")]
         public string CNIC { get; set; }
+        [DisplayName("Contact Number")]
+        [StringLength(11, MinimumLength = 11, ErrorMessage = "CNIC must be 13 digits long")]
+
+        [Required(ErrorMessage = "Contact number is Required")]
         public string CONTACTNUMBER { get; set; }
+        [DisplayName("Address")]
+        [Required(ErrorMessage = "Address is Required")]
         public string ADDRESS { get; set; }
+        [DisplayName("Vehicle Number") ]
+        [Required(ErrorMessage = "Vehicle Number is Required")]
         public string VEHICLEREGISTRATIONNUMBER { get; set; }
     }
 

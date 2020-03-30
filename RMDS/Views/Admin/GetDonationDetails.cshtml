@@ -1,0 +1,50 @@
+﻿@model IEnumerable<RMDS.Models.DonationDetails>
+
+@{
+    ViewBag.Title = "GetDonationDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Donation detials</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<p>
+    @Html.ActionLink("Back to list", "GetAllPendingDonation")
+</p>
+<table class="table table-responsive table-striped  table-hover">
+    <thead class="thead" style="background-color:aquamarine">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ITEMNAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QUANTITY)
+            </th>
+
+            <th></th>
+        </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ITEMNAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QUANTITY)
+                </td>
+                <td>
+                    @Html.HiddenFor(modelItem => item.DONATIONID)
+                </td>
+
+            </tr>
+
+        }
+
+</table>

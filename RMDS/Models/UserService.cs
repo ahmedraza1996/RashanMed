@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 using SqlKata.Compilers;
 using SqlKata.Execution;
 using System;
@@ -18,34 +19,43 @@ namespace RMDS.Models
             var compiler = new MySqlCompiler();
             var db = new QueryFactory(connection, compiler);
             db.Connection.Open();
+            try
+            {
+                IEnumerable<IDictionary<string, object>> response;
+                response = db.Query("User").Where("Username", Username).OrWhere("Email", Username).OrWhere("Cnic", Username).Get().Cast<IDictionary<string, object>>();
 
-            IEnumerable<IDictionary<string, object>> response;
-            //response = db.Query("User").Where("Username", Username).OrWhere("Email", Username).OrWhere("Cnic", Username).Get().Cast<IDictionary<string, object>>();
-            //response.ElementAt(0).Remove("DapperRow");
-            //bool hasData = (response != null) ? true : false;
+                var strResponse = response.ElementAt(0).ToString().Replace("DapperRow,", "").Replace("=", ":");
+                Dictionary<string, string> temp = JsonConvert.DeserializeObject<Dictionary<string, string>>(strResponse);
+                bool hasData = (temp != null) ? true : false;
 
-            //if (hasData)
-            //{
-            //    response.ElementAt(0).TryGetValue("Password", out object pass);
+                if (hasData)
+                {
+                    temp.TryGetValue("upassword", out string pass);
 
-            //    if (Password.Equals(pass))
-            //    {
+                    if (Password.Equals(pass))
+                    {
 
-            //        return true;
-            //    }
-            //    else
-            //    {
-            //        return false;
-            //    }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-            //}
-            //else
-            //{
+                }
+                else
+                {
 
-            //    return false;
-            //}
+                    return false;
+                }
 
-            return true; 
+            }
+            
+            catch(Exception ex)
+            {
+
+            }
+            return false;
         }
     }
 }

@@ -25,17 +25,17 @@ namespace RMDS.Controllers
             object DonationDetails;
             test.TryGetValue("DonationDetails", out DonationDetails);
            
-            object PickUpLat;
-            test.TryGetValue("PickUpLat", out PickUpLat);
-            double _PickUpLat = Convert.ToDouble(PickUpLat);
-            object PickUpLng;
-            test.TryGetValue("PickUpLng", out PickUpLng);
-            double _PickUpLng = Convert.ToDouble(PickUpLng);
+            //object PickUpLat;
+            //test.TryGetValue("PickUpLat", out PickUpLat);
+            //double _PickUpLat = Convert.ToDouble(PickUpLat);
+            //object PickUpLng;
+            //test.TryGetValue("PickUpLng", out PickUpLng);
+            //double _PickUpLng = Convert.ToDouble(PickUpLng);
             object UserId;
             test.TryGetValue("UserId", out UserId);
             int _UserId = Convert.ToInt32 (UserId);
             object TypeId;
-            test.TryGetValue("TypeId", out TypeId);
+            test.TryGetValue("DonationTypeId", out TypeId);
             int _TypeId = Convert.ToInt32(TypeId);
 
             var connection = new MySqlConnection(ConfigurationManager.AppSettings["MySqlDBConn"].ToString());
@@ -49,26 +49,32 @@ namespace RMDS.Controllers
                     Dictionary<string, object> DonationObj = new Dictionary<string, object>()
                     {
                         {"RequestDate",DateTime.Now.Date },
-                        {"TypeId", _TypeId },
+                        {"DonationTypeId", _TypeId },
                         {"UserId", _UserId },
-                        {"PickUpLat",_PickUpLat },
-                        {"PickUpLng",_PickUpLng },
+                      
                         {"DonationStatus",DonationStatusPending  }
                         //donationdetails
                     };
 
 
-                    var res = db.Query("userDonation").Insert(DonationObj);  //lastinsertedid
+                    var res = db.Query("userDonation").InsertGetId<int>(new
+                    {
+                        RequestDate = DateTime.Now.Date,
+                        DonationTypeId = _TypeId,
+                        UserId = _UserId,
+                        DonationStatus= DonationStatusPending
+                    }); 
                     List<Dictionary<string, object>> _DonationDetails = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(DonationDetails.ToString());
 
                     foreach ( var item in _DonationDetails)
                     {
-                        item.Add("DonationID", res);
+                        item.Add("DonationId", res);
+                        var resp = db.Query("Donationdetails").Insert(item);
                     }
 
 
                     scope.Commit();
-                    return Request.CreateResponse(HttpStatusCode.Created, new Dictionary<string, int>() { { "DonationId", res } });
+                    return Request.CreateResponse(HttpStatusCode.Created, new Dictionary<string, int>() { { "LastInsertedID", res } });
                 }
                 catch (Exception ex)
                 {

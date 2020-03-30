@@ -167,18 +167,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\apiControllers\AccountController.cs" />
     <Compile Include="Controllers\apiControllers\DonatorController.cs" />
     <Compile Include="Controllers\apiControllers\HomeController.cs" />
-    <Compile Include="Controllers\apiControllers\ReceiverController.cs" />
+    <Compile Include="Controllers\apiControllers\DistributorController.cs" />
     <Compile Include="Controllers\BasicAuthenticationAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\DistributorRequest.cs" />
     <Compile Include="Models\DonationDetails.cs" />
     <Compile Include="Models\DonationType.cs" />
-    <Compile Include="Models\ReceiveDetail.cs" />
     <Compile Include="Models\Rider.cs" />
     <Compile Include="Models\RiderDeliver.cs" />
     <Compile Include="Models\RiderDonation.cs" />
@@ -231,9 +232,22 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Admin\Donators.cshtml" />
+    <Content Include="Views\Admin\Distributors.cshtml" />
+    <Content Include="Views\Admin\AddRider.cshtml" />
+    <Content Include="Views\Admin\Riders.cshtml" />
+    <Content Include="Views\Admin\GetRiders.cshtml" />
+    <Content Include="Views\Admin\PendingDonations.cshtml" />
+    <Content Include="Views\Admin\GetDonationDetails.cshtml" />
+    <Content Include="Views\Admin\GetUserDetail.cshtml" />
+    <Content Include="Views\Admin\EditDonation.cshtml" />
+    <Content Include="Views\Admin\GetDistributionRequest.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Admin\GetAllDonations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Template\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

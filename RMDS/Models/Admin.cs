@@ -2,6 +2,7 @@
 using RMDS.Shared;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,9 @@ namespace RMDS.Models
     public class Admin
     {
         public int ADMINID { get; set; }
+        [DisplayName("Full Name")]
         public string FULLNAME { get; set; }
+        [DisplayName("Password")]
         public string APASSWORD { get; set; }
         public string EMAIL { get; set; }
         public string USERNAME { get; set; }
@@ -71,7 +74,7 @@ namespace RMDS.Models
             objAdmin.ADMINID = DbCheck.IsValidInt(reader["Adminid"]);
             objAdmin.FULLNAME = DbCheck.IsValidString(reader["fullname"]);
             objAdmin.EMAIL = DbCheck.IsValidString(reader["email"]);
-            objAdmin.APASSWORD = DbCheck.IsValidString(reader["apasswrd"]);
+            objAdmin.APASSWORD = DbCheck.IsValidString(reader["apassword"]);
             objAdmin.USERNAME = DbCheck.IsValidString(reader["username"]);
             return objAdmin;
 

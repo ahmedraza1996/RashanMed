@@ -28,7 +28,7 @@ namespace RMDS.Controllers
                 string token = actionContext.Request.Headers.Authorization.Parameter;
                 string decodedToken = Encoding.UTF8.GetString(Convert.FromBase64String(token));
                 string username = decodedToken.Split(':')[0];
-                string password = decodedToken.Split(':')[0];
+                string password = decodedToken.Split(':')[1];
                 if (UserService.Login(username, password))
                 {
                     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
@@ -36,7 +36,7 @@ namespace RMDS.Controllers
                 }
                 else
                 {
-                    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
+                    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized,"Please log in");
                 }
 
             }

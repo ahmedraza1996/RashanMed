@@ -1,0 +1,65 @@
+﻿@model IEnumerable<RMDS.Models.Rider>
+
+@{
+    ViewBag.Title = "Riders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Riders</h2>
+
+<p>
+    @Html.ActionLink("Add New", "AddNew")
+</p>
+@if (Model.Count() < 0)
+{
+    <h3>No riders to show</h3>
+
+}
+else
+{
+<table class="table table-responsive table-striped  table-hover">
+    <thead class="thead" style="background-color:aquamarine">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FULLNAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CNIC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CONTACTNUMBER)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ADDRESS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEHICLEREGISTRATIONNUMBER)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FULLNAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CNIC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CONTACTNUMBER)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ADDRESS)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VEHICLEREGISTRATIONNUMBER)
+                </td>
+
+            </tr>
+        }
+
+</table>
+}
+

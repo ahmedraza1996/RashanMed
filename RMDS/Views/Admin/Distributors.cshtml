@@ -1,0 +1,63 @@
+﻿@model IEnumerable<RMDS.Models.User>
+
+@{
+    ViewBag.Title = "Distributors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Distributors</h2>
+<br />
+
+<table class="table table-responsive table-striped  table-hover">
+    <thead class="thead" style="background-color:aquamarine">
+        <tr style="font-size:20px">
+            <th> </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.CNIC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+
+        <tr style="font-size: large">
+
+            <td style="color:brown; font-weight:400">
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CNIC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+
+        </tr>
+
+    }
+
+</table>

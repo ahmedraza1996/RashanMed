@@ -8,24 +8,28 @@ using System.Web;
 
 namespace RMDS.Models
 {
-    public class DonationType
+    public class DistributorRequest
     {
-        public int DonationTypeId { get; set; }
-        public string TypeName { get; set; }
+        public int RequestID { get; set; }
+        public int NumberOfPeople { get; set; }
+        public DateTime? RequestDate { get; set; }
+        public string RequestStatus { get; set; }
+        public int UserID { get; set; }
+
 
     }
-    public class DonationTypeManager : BaseManager
+    public class DistributorRequestManager : BaseManager
     {
-        public static List<DonationType> GetDonationType(string whereclause, MySqlConnection conn = null)
+        public static List<DistributorRequest> GetDistributionRequest(string whereclause, MySqlConnection conn = null)
         {
-            DonationType ObjDD = new DonationType();
-            List<DonationType> lstDD = new List<DonationType>();
+            DistributorRequest ObjDD = new DistributorRequest();
+            List<DistributorRequest> lstDD = new List<DistributorRequest>();
             try
             {
                 bool isConnArgNull = (conn != null) ? false : true;
                 MySqlConnection connection = (conn != null) ? conn : PrimaryConnection();
                 tryOpenConnection(connection);
-                string sql = "select * from DonationType";
+                string sql = "select * from distributorrequest";
                 if (!string.IsNullOrEmpty(whereclause))
                     sql += " where " + whereclause;
                 using (MySqlCommand command = new MySqlCommand())
@@ -38,7 +42,7 @@ namespace RMDS.Models
                         {
                             while (reader.Read())
                             {
-                                ObjDD = ReaderDataDonationType(reader);
+                                ObjDD = ReaderDataDistributorRequest(reader);
                                 lstDD.Add(ObjDD);
                             }
                         }
@@ -61,21 +65,23 @@ namespace RMDS.Models
             }
             return lstDD;
         }
-        private static DonationType ReaderDataDonationType(MySqlDataReader reader)
+        private static DistributorRequest ReaderDataDistributorRequest(MySqlDataReader reader)
         {
-            DonationType objDD = new DonationType();
-            objDD.DonationTypeId = DbCheck.IsValidInt(reader["DonationTypeId"]);
-            objDD.TypeName = DbCheck.IsValidString(reader["TypeName"]);
-
+            DistributorRequest objDD = new DistributorRequest();
+            objDD.RequestID = DbCheck.IsValidInt(reader["RequestID"]);
+            objDD.NumberOfPeople = DbCheck.IsValidInt(reader["NumberOfPeople"]);
+            objDD.RequestDate = DbCheck.IsValidDateTime(reader["RequestDate"]);
+            objDD.RequestStatus = DbCheck.IsValidString(reader["RequestStatus"]);
+            objDD.UserID = DbCheck.IsValidInt(reader["UserId"]);
             return objDD;
 
         }
-        public static string SaveDonationType(DonationType ObjDD, MySqlConnection conn = null, MySqlTransaction trans = null)
+        public static string SaveDistributionRequest(DistributorRequest ObjDD, MySqlConnection conn = null, MySqlTransaction trans = null)
         {
             string returnMessage = "";
             string sDDID = "";
-            sDDID = ObjDD.DonationTypeId.ToString();
-            var templstEmp = GetDonationType("typeid = '" + sDDID + "'", conn);
+            sDDID = ObjDD.RequestID.ToString();
+            var templstEmp = DistributorRequestManager.GetDistributionRequest("RequestID = '" + sDDID + "'", conn);
             try
             {
                 bool isConnArgNull = (conn != null) ? false : true;
@@ -88,24 +94,29 @@ namespace RMDS.Models
                     if (templstEmp.Count <= 0)
                     {
                         isEdit = false;
-                        sql = @"INSERT INTO usertype(
-                                                    
-                                                    typename,
-                                                   
+                        sql = @"INSERT INTO DistributorRequest(
+                                                    RequestDate,
+                                                    NumberOfPeople,
+                                                    UserId, 
+                                                    RequestStatus
+                                                                     
                                                     )
                                                     VALUES(
-                                                    
-                                                    @typename,
-                                                                                                      
+                                                    @RequestDate,
+                                                    @NumberOfPeople,
+                                                    @UserId,
+                                                    @RequestStatus                                                   
                                                     )";
                     }
                     else
                     {
-                        sql = @"Update usertype set
-                                                    typeid=@typeid,                                                
-                                                    typename=@typename,
-                                                  
-                                                    Where typeid=@typeid";
+                        sql = @"Update DistributorRequest set
+                                                    RequestID=@RequestID,                                                
+                                                    RequestDate=@RequestDate,
+                                                    RequestStatus=@RequestStatus,
+                                                    UserId=@UserId,
+                                                    NumberOfPeople=@NumberOfPeople,
+                                                    Where RequestID=@RequestID";
                     }
                     if (trans != null)
                     {
@@ -116,9 +127,12 @@ namespace RMDS.Models
                     command.CommandText = sql;
                     if (isEdit)
                     {
-                        command.Parameters.AddWithValue("@typeid", ObjDD.DonationTypeId);
+                        command.Parameters.AddWithValue("@DonationID", ObjDD.RequestID);
                     }
-                    command.Parameters.AddWithValue("@typename", ObjDD.TypeName);
+                    command.Parameters.AddWithValue("@RequestDate", ObjDD.RequestDate);
+                    command.Parameters.AddWithValue("@RequestStatus", ObjDD.RequestStatus);
+                    command.Parameters.AddWithValue("@UserId", ObjDD.UserID);
+                    command.Parameters.AddWithValue("@NumberOfPeople", ObjDD.NumberOfPeople);
 
                     int affectedRows = command.ExecuteNonQuery();
                     var lastInsertID = command.LastInsertedId;
@@ -144,9 +158,5 @@ namespace RMDS.Models
 
             return returnMessage;
         }
-
-
-
     }
-
 }

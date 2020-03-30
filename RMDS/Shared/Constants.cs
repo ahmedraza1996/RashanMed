@@ -10,13 +10,13 @@ namespace RMDS.Shared
 
         public const string SESSION_USER = "SessionUser";
         public const string SESSION_ADMIN = "SessionAdmin";
-        public const int ReqStatusPending = 1;
-        public const int ReqStatusRiderSent = 2;
-        public const int ReqStatusDeliverd = 3;
+        public const string ReqStatusPending = "Pending";
+        public const string ReqProcessed = "Processed";
+        public const string ReqStatusDeliveerd = "Delivered";
 
-        public const int DonationStatusPending = 1;
-        public const int DonationStatusRiderSent = 2;
-        public const int DonationStatusPicked = 3;
+        public const string DonationStatusPending = "Pending";
+        public const string DonationStatusRiderSent = "Processed";
+        public const string DonationStatusPicked = "Received";
 
         public static DDList MSG_SESSION_USER_EMPTY = new DDList("sessionUserEmpty", "No user seems to be signed in! ");
         public static DDList MSG_SESSION_USER_UNV = new DDList("sessionUserUnverified", "User is not yet verified! ");
@@ -30,6 +30,7 @@ namespace RMDS.Shared
         public static DDList MSG_ERR_SERVER = new DDList("DBError", "Now this is embarrassing... there seems to be a problem! ");
         public static DDList MSG_ERR_DBSAVE = new DDList("Unable to save, Please contact ISD", "Unable to retrieve or save record in the database. ");
         public static DDList MSG_OK_DBSAVE = new DDList("OK", "OK");
+
 
         public class DDList
         {
