@@ -39,7 +39,7 @@
                     <option value="Processed">Processed</option>
                     <option value="Cancel">Cancel</option>
         </select>*@
-            @Html.DropDownListFor(model => model.DonationStatus, new SelectList(new string[] { "Pending", "Processed", "Cancel" }, Model.DonationStatus) , new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.DonationStatus, new SelectList(new string[] { "Pending", "Processed", "Cancel" }, Model.DonationStatus) , new { @class = " form-control dropdown-toggle", style=" height:35px"})
 
             @*@Html.DropDownListFor(m => m.StudentGender,
         new SelectList(Enum.GetValues(typeof(Gender))),
@@ -69,12 +69,12 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="EditDonation" class="btn btn-default" />
+            <input type="submit" value="Edit Donation" class="btn btn-default" />
         </div>
     </div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "GetAllPendingDonation")
 </div>

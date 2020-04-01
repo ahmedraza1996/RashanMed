@@ -33,6 +33,10 @@ namespace RMDS.Models
 
         public string DonationType { get; set; }
 
+        public List<DonationDetails> lstDonationDet { get; set; }
+        public List<string> ItemName { get; set; }
+
+        public List<int>Quantity { get; set; }
     }
     public class UserDonationManager : BaseManager
     {
@@ -155,7 +159,7 @@ namespace RMDS.Models
                     var lastInsertID = command.LastInsertedId;
                     if (affectedRows > 0)
                     {
-                        returnMessage = "OK";
+                        returnMessage = lastInsertID.ToString();
                     }
                     else
                     {

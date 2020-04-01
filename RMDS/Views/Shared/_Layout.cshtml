@@ -13,46 +13,110 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Taqseeem</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <link href="~/Content/mystyle.css" rel="stylesheet" />
+
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+
+
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-expand-lg" style="height:inherit; background-color:black; color:white">
         <div class="container">
 
-            <div class="navbar-header">
+            <div class="navbar-header navbarheader">
                 @if (SessionAdmin != null)
                 {
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button> 
                 }
-                 <a class=" navbar-brand" href=""></a>       
-                @Html.ActionLink("Taqseem", "GetAllPendingDonation", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-
+                <a class="navbrand navbar-brand "  onclick="location.href='@Url.Action("Index", "Admin")'">
+                   <img src="~/Content/Assets/logo.png" style="height:40px; width:40px; margin-top:-10px"  />
+                  
+                </a>
+                <a class=" navbar-brand navbrand " onclick="location.href='@Url.Action("Index", "Admin")'" >Taqseem</a>
+              
             </div>
-            @if (SessionAdmin != null)
-            {
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Donators", "GetAllDonator", "Admin")</li>
-                        <li>@Html.ActionLink("Distributors", "GetAllDistributors", "Admin")</li>
-                        <li>@Html.ActionLink("Donations", "GetAllPendingDonation", "Admin")</li>
-                        <li>@Html.ActionLink("Distrbute", "GetDistributionRequest", "Admin")</li>
+            
+           
+            <div class="navbar-collapse collapse">
+                @if (SessionAdmin != null)
+                {
+                    <ul class="nav navbar-nav" id="navbaritems">
 
-                       
+                        <li class="nav-item dropdown" style="margin-left:20px; margin-right:20px">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Donators
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="dditems">
+                                <a class="dropdown-item" onclick="location.href='@Url.Action("GetAllDonator", "Admin")'">Donator List</a>
+                                <a class="dropdown-item" onclick="location.href='@Url.Action("AddDonator", "Admin", new { id= 1})'">Add Donator</a>
 
-                        <li class="nav-item"><a class="genric-btn primary circle" style="padding:0 20px; margin-top:18px">@SessionAdmin.USERNAME</a></li>
-                        <li class="nav-item"><a class="genric-btn primary circle" onclick="location.href='@Url.Action("SignOut", "Admin")'" style="padding:0 20px; margin-top:18px">Log out</a></li>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown" style="margin-left:20px; margin-right:20px">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Distributors
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="dditems">
+                                <a class="dropdown-item" onclick="location.href='@Url.Action("GetAllDistributors", "Admin")'">Distributor List </a>
+                                <a class="dropdown-item" onclick="location.href='@Url.Action("AddDistributor", "Admin")'">Add Distributor</a>
+
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown" style="margin-left:20px; margin-right:20px">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Donations
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="dditems">
+                                <a class="dropdown-item" onclick="location.href='@Url.Action("GetAllPendingDonation", "Admin")'"> Pending Donations </a>
+                                <a class="dropdown-item" onclick="location.href='@Url.Action("GetAllDonations", "Admin")'">All Donations</a>
+                                <a class="dropdown-item" onclick="location.href='@Url.Action("AddDonation", "Admin" )'">Add Donations</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown" style="margin-left:20px; margin-right:20px">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Distributions
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="dditems">
+                                <a class="dropdown-item" onclick="location.href='@Url.Action("GetDistributionRequest", "Admin")'">Distributor Requests</a>
+                                <a class="dropdown-item" onclick="location.href='@Url.Action("AddRequest", "Admin")'">Add Request</a>
+
+                            </div>
+                        </li>
 
                     </ul>
-                </div>}
+                }
+              
+            <ul class="nav navbar-nav navbar-right">
+                @if (SessionAdmin != null)
+                {
+                    <li><a class="genric-btn primary circle">@SessionAdmin.USERNAME</a></li>
+
+                    <li><a onclick="location.href='@Url.Action("SignOut", "Admin")'"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
+                }
+
+                else
+                {
+                    <li><a onclick="location.href='@Url.Action("#", "#")'"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a onclick="location.href='@Url.Action("Login", "Admin")'"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                }
+            </ul>
+                </div>
+              
 
         </div>
     </div>
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -64,5 +128,10 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <scripts>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </scripts>
 </body>
 </html>

@@ -5,59 +5,116 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Donators</h2>
-<br />
+    <div class="container container-fluid">
+        <h2>Donators</h2>
+        <br />
+        <div class="form-group">
+            <button class="btn btn-dark" title="Donation Detials" onclick="location.href='@Url.Action("AddDonator", "Admin",new {id= 1 })'">Add Donator</button>
 
-<table class="table table-responsive table-striped  table-hover">
-    <thead class="thead" style="background-color:aquamarine">
-        <tr style="font-size:20px">
-            <th> </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
+        </div>
 
-            <th>
-                @Html.DisplayNameFor(model => model.CNIC)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contact)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
+        <table class="table table-responsive table-striped  table-hover">
+            <thead class="thead">
+                <tr style="font-size:20px">
 
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th></th>
-        </tr>
-        </thead>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FullName)
+                    </th>
 
-        @foreach (var item in Model)
-        {
-            int count = 1;
-            <tr style="font-size: large">
-                <td>@count</td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CNIC)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Contact)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+
+        <tr style="font-size: large">
+            @if (!string.IsNullOrEmpty(item.FullName))
+            {
                 <td style="color:brown; font-weight:400">
                     @Html.DisplayFor(modelItem => item.FullName)
                 </td>
+            }
+            else
+            {
+                <td style="text-align:center">
+                    <text>-</text>
+                </td>
+            }
 
+
+            @if (!string.IsNullOrEmpty(item.CNIC))
+            {
                 <td>
                     @Html.DisplayFor(modelItem => item.CNIC)
                 </td>
+            }
+            else
+            {
+                <td style="text-align:center">
+                    <text>-</text>
+                </td>
+            }
+
+            @if (!string.IsNullOrEmpty(item.Contact))
+            {
                 <td>
                     @Html.DisplayFor(modelItem => item.Contact)
                 </td>
+            }
+            else
+            {
+                <td style="text-align:center">
+                    <text>-</text>
+                </td>
+            }
+
+
+            @if (!string.IsNullOrEmpty(item.Address))
+            {
                 <td>
+
                     @Html.DisplayFor(modelItem => item.Address)
                 </td>
+            }
+            else
+            {
+                <td style="text-align:center">
+                    <text>-</text>
+                </td>
+            }
 
+
+            @if (!string.IsNullOrEmpty(item.Email))
+            {
                 <td>
+
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
+            }
+            else
+            {
+                <td style="text-align:center">
+                    <text>-</text>
+                </td>
+            }
 
-            </tr>
-            count++;
-        }
+        </tr>
 
-</table>
+            }
+
+        </table>
+    </div>

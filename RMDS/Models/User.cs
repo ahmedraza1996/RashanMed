@@ -2,6 +2,8 @@
 using RMDS.Shared;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -11,11 +13,20 @@ namespace RMDS.Models
     public class User
     {
         public int UserID { get; set; }
+        [DisplayName("Full Name")]
+        [Required(ErrorMessage = "Full name is Required")]
         public string FullName { get; set; }
         public string Username { get; set; }
         public string UPassword { get; set; }
+        [Required(ErrorMessage="CNIC number is required")]
         public string CNIC { get; set; }
+       
+        [Required(ErrorMessage = "Contact number is required")]
+
         public string Contact { get; set; }
+        
+        [Required(ErrorMessage = "Address number is required")]
+
         public string Address { get; set; }
         public int UserTypeId { get; set; }
 
@@ -77,7 +88,7 @@ namespace RMDS.Models
             objDD.Username = DbCheck.IsValidString(reader["username"]);
             objDD.UPassword = DbCheck.IsValidString(reader["upassword"]);
             objDD.CNIC = DbCheck.IsValidString(reader["cnic"]);
-            //objDD.Contact = DbCheck.IsValidString(reader["Contact"]);
+            objDD.Contact = DbCheck.IsValidString(reader["Contact"]);
             objDD.Address = DbCheck.IsValidString(reader["address"]);
             objDD.UserTypeId = DbCheck.IsValidInt(reader["usertypeid"]);
             objDD.Email = DbCheck.IsValidString(reader["email"]);
@@ -185,7 +196,59 @@ namespace RMDS.Models
             return returnMessage;
         }
 
+        private static User ReaderDataUserName(MySqlDataReader reader)
+        {
+            User objDD = new User();
+            objDD.UserID = DbCheck.IsValidInt(reader["UserID"]);
+            objDD.FullName = DbCheck.IsValidString(reader["fullname"]);
+            
+            return objDD;
+
+        }
+        public static List<User> GetUserName(string whereclause, MySqlConnection conn = null)
+        {
+            User ObjDD = new User();
+            List<User> lstDD = new List<User>();
+            try
+            {
+                bool isConnArgNull = (conn != null) ? false : true;
+                MySqlConnection connection = (conn != null) ? conn : PrimaryConnection();
+                tryOpenConnection(connection);
+                string sql = "select * from User";
+                if (!string.IsNullOrEmpty(whereclause))
+                    sql += " where " + whereclause;
+                using (MySqlCommand command = new MySqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = sql;
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                ObjDD = ReaderDataUserName(reader);
+                                lstDD.Add(ObjDD);
+                            }
+                        }
+                        else
+                        {
+                        }
+                    }
+                    if (isConnArgNull == true)
+                    {
+                        connection.Dispose();
+                    }
 
 
+                }
+            }
+            //endtry
+            catch (Exception ex)
+            {
+
+            }
+            return lstDD;
+        }
     }
 }

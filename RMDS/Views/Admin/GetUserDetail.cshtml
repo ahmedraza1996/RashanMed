@@ -4,39 +4,44 @@
     ViewBag.Title = "GetUserDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+    <div class="container container-fluid">
 
-<h2>User Detail</h2>
+        <h2>User Detail</h2>
 
-<div>
-    <hr />
-  
+        <div>
+            <hr />
 
-    <table style="width:100%; background-color:ActiveBorder; border:thin " class="col-sm-8 table table-condensed table-responsive table-bordered table-hover " >
-        <tr>
-            <th > @Html.DisplayNameFor(model => model.FullName)</th>
-            <td> @Html.DisplayFor(model => model.FullName)</td>
-        </tr>
-        <tr>
-            <th> @Html.DisplayNameFor(model => model.CNIC)</th>
-            <td> @Html.DisplayFor(model => model.CNIC)</td>
-        </tr>
-        <tr>
-            <th> @Html.DisplayNameFor(model => model.Contact)</th>
-            <td> @Html.DisplayFor(model => model.Contact)</td>
-        </tr>
-        <tr>
-            <th> @Html.DisplayNameFor(model => model.Email)</th>
-            <td> @Html.DisplayFor(model => model.Email)</td>
-        </tr>
-        <tr>
-            <th> @Html.DisplayNameFor(model => model.Address)</th>
-            <td> @Html.DisplayFor(model => model.Address)</td>
-        </tr>
-    </table>
 
-    </body>
-</div>
-<p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.UserID }) |*@
-    @Html.ActionLink("Back to List", "GetAllPendingDonation")
-</p>
+            <table style="width:100%; background-color:ActiveBorder; border:thin " class="col-sm-8 table table-condensed table-responsive table-bordered table-hover dettable ">
+                <tr>
+                    <th> @Html.DisplayNameFor(model => model.FullName)</th>
+                    <td> @Html.DisplayFor(model => model.FullName)</td>
+                </tr>
+                <tr>
+                    <th> @Html.DisplayNameFor(model => model.CNIC)</th>
+                    <td> @Html.DisplayFor(model => model.CNIC)</td>
+                </tr>
+                <tr>
+                    <th> @Html.DisplayNameFor(model => model.Contact)</th>
+                    <td> @Html.DisplayFor(model => model.Contact)</td>
+                </tr>
+                <tr>
+                    <th> @Html.DisplayNameFor(model => model.Email)</th>
+                    <td> @Html.DisplayFor(model => model.Email)</td>
+                </tr>
+                <tr>
+                    <th> @Html.DisplayNameFor(model => model.Address)</th>
+                    <td> @Html.DisplayFor(model => model.Address)</td>
+                </tr>
+            </table>
+
+            </body>
+        </div>
+        <div class="form-group" style="margin-top:20px;">
+            <button class="btn btn-dark" title="Donation Detials" onclick="location.href='@Url.Action("GetAllPendingDonation", "Admin")'">Back to List</button>
+
+        </div>
+      
+
+
+    </div>

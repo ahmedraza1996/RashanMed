@@ -1,0 +1,36 @@
+﻿
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+        <div class="navbar-header">
+            @if (SessionAdmin != null)
+            {
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            }
+            <a class=" navbar-brand" href=""></a>
+            @Html.ActionLink("Taqseem", "GetAllPendingDonation", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+
+        </div>
+        @if (SessionAdmin != null)
+        {
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Donators", "GetAllDonator", "Admin")</li>
+                    <li>@Html.ActionLink("Distributors", "GetAllDistributors", "Admin")</li>
+                    <li>@Html.ActionLink("Donations", "GetAllPendingDonation", "Admin")</li>
+                    <li>@Html.ActionLink("Distrbute", "GetDistributionRequest", "Admin")</li>
+
+
+
+                    <li class="nav-item"><a class="genric-btn primary circle" style="padding:0 20px; margin-top:18px">@SessionAdmin.USERNAME</a></li>
+                    <li class="nav-item"><a class="genric-btn primary circle" onclick="location.href='@Url.Action("SignOut", "Admin")'" style="padding:0 20px; margin-top:18px">Log out</a></li>
+
+                </ul>
+            </div>}
+
+    </div>
+</div>

@@ -102,7 +102,7 @@ namespace RMDS.Models
                                                     VALUES(
                                                     @ITEMNAME,
                                                     @QUANTITY,
-                                                    @DONATIONID,
+                                                    @DONATIONID
                                                    
                                                     )";
                     }
