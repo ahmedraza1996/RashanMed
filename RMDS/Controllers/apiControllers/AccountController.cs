@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web.Helpers;
 using System.Web.Http;
 using static RMDS.Shared.Constants;
 
@@ -44,8 +45,8 @@ namespace RMDS.Controllers.apiControllers
                 {
                     string pass;
                     temp.TryGetValue("upassword", out pass);
-
-                    if (_Password.Equals(pass))
+                    
+                    if (pass.Equals(Crypto.Hash(_Password)))
                     {
                         statusCode = HttpStatusCode.OK;
                         return Request.CreateResponse(statusCode, response.ElementAt(0));
@@ -133,6 +134,7 @@ namespace RMDS.Controllers.apiControllers
             test.TryGetValue("UsertypeID", out _UsertypeID);
             int UsertypeID = Convert.ToInt32(_UsertypeID);
 
+            string encodedPw = Crypto.Hash(Password);
             var connection = new MySqlConnection(ConfigurationManager.AppSettings["MySqlDBConn"].ToString());
             var compiler = new MySqlCompiler();
             var db = new QueryFactory(connection, compiler);
@@ -144,7 +146,7 @@ namespace RMDS.Controllers.apiControllers
                     Dictionary<string, object> ObjUser = new Dictionary<string, object>()
                     {
                         {"Email",Email },
-                        {"UPassword", Password },
+                        {"UPassword", encodedPw },
                         {"Username", Username },
                         {"UsertypeID",UsertypeID },
 
@@ -187,7 +189,7 @@ namespace RMDS.Controllers.apiControllers
             object _UsertypeID;
             test.TryGetValue("UsertypeID", out _UsertypeID);
             int UsertypeID = Convert.ToInt32(_UsertypeID);
-
+            string encodedPw = Crypto.Hash(Password);
             var connection = new MySqlConnection(ConfigurationManager.AppSettings["MySqlDBConn"].ToString());
             var compiler = new MySqlCompiler();
             var db = new QueryFactory(connection, compiler);
@@ -199,7 +201,7 @@ namespace RMDS.Controllers.apiControllers
                     Dictionary<string, object> ObjUser = new Dictionary<string, object>()
                     {
                         {"Cnic",Cnic },
-                        {"UPassword", Password },
+                        {"UPassword", encodedPw },
                         {"Username", Username },
                         {"UsertypeID",UsertypeID },
 

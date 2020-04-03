@@ -177,6 +177,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Crypto.cs" />
     <Compile Include="Models\DistributorRequest.cs" />
     <Compile Include="Models\DonationDetails.cs" />
     <Compile Include="Models\DonationType.cs" />
