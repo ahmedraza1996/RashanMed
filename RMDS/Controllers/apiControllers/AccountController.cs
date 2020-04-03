@@ -45,8 +45,8 @@ namespace RMDS.Controllers.apiControllers
                 {
                     string pass;
                     temp.TryGetValue("upassword", out pass);
-                    
-                    if (pass.Equals(Crypto.Hash(_Password)))
+                    string hashed = RMDS.Models.Crypto.Hash(_Password);
+                    if (pass.Equals(hashed))
                     {
                         statusCode = HttpStatusCode.OK;
                         return Request.CreateResponse(statusCode, response.ElementAt(0));
@@ -134,7 +134,7 @@ namespace RMDS.Controllers.apiControllers
             test.TryGetValue("UsertypeID", out _UsertypeID);
             int UsertypeID = Convert.ToInt32(_UsertypeID);
 
-            string encodedPw = Crypto.Hash(Password);
+            string encodedPw = RMDS.Models.Crypto.Hash(Password);
             var connection = new MySqlConnection(ConfigurationManager.AppSettings["MySqlDBConn"].ToString());
             var compiler = new MySqlCompiler();
             var db = new QueryFactory(connection, compiler);

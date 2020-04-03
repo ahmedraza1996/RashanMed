@@ -31,8 +31,10 @@ namespace RMDS.Models
                 if (hasData)
                 {
                     temp.TryGetValue("upassword", out string pass);
+                    Password = Password.ToString();
+                    string pw = Crypto.Hash(Password);
 
-                    if (Password.Equals(pass))
+                    if (pass.Equals(pw))
                     {
 
                         return true;

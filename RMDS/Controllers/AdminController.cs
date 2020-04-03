@@ -252,6 +252,20 @@ namespace RMDS.Controllers
 
 
         }
+        public ActionResult GetAllRequest()
+        {
+            if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
+
+                return RedirectToAction("Login");
+            }
+            //select* from userdonation d, user u where d.donationstatus = 'pending ' and d.userid = u.userid
+            List<DistributorRequest> lstDist = DistributorRequestManager.GetDistributionRequest("", null);
+
+            return View(lstDist);
+
+
+        }
 
         public ActionResult SignOut()
         {
@@ -430,7 +444,39 @@ namespace RMDS.Controllers
             return RedirectToAction("AddDistribution", "Admin");
 
         }
+        public ActionResult EditRequest(string id)
+        {
+            if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
 
-        
+                return RedirectToAction("Login");
+            }
+            List<DistributorRequest> lstRequest = DistributorRequestManager.GetDistributionRequest("RequestID='" + id + "'", null);
+
+            return View(lstRequest.First());
+
+        }
+        [HttpPost]
+
+        public ActionResult EditRequest(DistributorRequest obj)
+        {
+            if (Session[Shared.Constants.SESSION_ADMIN] == null)
+            {
+
+                return RedirectToAction("Login");
+            }
+
+            string ret = Shared.Constants.MSG_ERR_NOUSEREXIST.Text;
+            ret = DistributorRequestManager.SaveDistributionRequest(obj);
+            if (ret.Equals(Shared.Constants.MSG_OK_DBSAVE.Text))
+            {
+                return RedirectToAction("GetDistributionRequest", "Admin");
+
+            }
+            return RedirectToAction("EditRequest", "Admin");
+
+
+        }
+
     }
 }

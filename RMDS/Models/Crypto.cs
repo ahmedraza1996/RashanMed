@@ -12,6 +12,7 @@ namespace RMDS.Models
         {
             string hashed = Convert.ToBase64String(
                 System.Security.Cryptography.SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(value)));
+            hashed=hashed.TrimEnd('=');
             return hashed;
         }
 

@@ -115,7 +115,7 @@ namespace RMDS.Models
                                                     RequestDate=@RequestDate,
                                                     RequestStatus=@RequestStatus,
                                                     UserId=@UserId,
-                                                    NumberOfPeople=@NumberOfPeople,
+                                                    NumberOfPeople=@NumberOfPeople
                                                     Where RequestID=@RequestID";
                     }
                     if (trans != null)
@@ -127,7 +127,7 @@ namespace RMDS.Models
                     command.CommandText = sql;
                     if (isEdit)
                     {
-                        command.Parameters.AddWithValue("@DonationID", ObjDD.RequestID);
+                        command.Parameters.AddWithValue("@RequestID", ObjDD.RequestID);
                     }
                     command.Parameters.AddWithValue("@RequestDate", ObjDD.RequestDate);
                     command.Parameters.AddWithValue("@RequestStatus", ObjDD.RequestStatus);

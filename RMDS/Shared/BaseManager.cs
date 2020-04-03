@@ -31,7 +31,7 @@ namespace RMDS.Shared
         }
         private static string GetPrimaryConnection(string connectionString = null)
         {
-            return ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            return ConfigurationManager.AppSettings["MySqlDBConn"].ToString();
         }
 
         public static MySqlConnection PrimaryConnection(string connectionString = null)

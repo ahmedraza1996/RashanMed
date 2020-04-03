@@ -31,28 +31,38 @@
             </thead>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.HiddenFor(modelItem => item.RequestID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumberOfPeople)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RequestDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RequestStatus)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserID)
-                    </td>
-                    <td>
-                        @*@Html.ActionLink("Donation Details", "GetDonationDetails", new { id = item.DonationID }) |
-                        @Html.ActionLink("Donator Details", "GetUserDetail", new { id = item.UserId }) |
-                        @Html.ActionLink("Edit Status", "EditDonation", new { id = item.DonationID })*@
-                    </td>
-                </tr>
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfPeople)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserID)
+            </td>
+            <td>
+                @if (item.RequestStatus.Equals("Pending"))
+                {
+                    <button class="btn btn-dark button" title="Edit Detials" onclick="location.href='@Url.Action("EditRequest", "Admin", new { id = item.RequestID })'"><p>Edit Status</p></button>
+
+                }
+                else
+                {
+                    <button class="btn btn-disabled button" title="Edit Detials" href="#" @*onclick="location.href='@Url.Action("EditDonation", "Admin", new { id = item.DonationID })'"*@><p>Edit Status</p></button>
+                }
+                @*@Html.ActionLink("Donation Details", "GetDonationDetails", new { id = item.DonationID }) |
+        @Html.ActionLink("Donator Details", "GetUserDetail", new { id = item.UserId }) |
+        @Html.ActionLink("Edit Status", "EditDonation", new { id = item.DonationID })*@
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => item.RequestID)
+            </td>
+        </tr>
             }
 
         </table>

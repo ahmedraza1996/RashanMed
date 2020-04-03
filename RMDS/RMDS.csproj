@@ -254,6 +254,8 @@
     <Content Include="Views\Admin\AddDistributor.cshtml" />
     <Content Include="Views\Admin\AddDistribution.cshtml" />
     <Content Include="Views\Admin\AddDonation.cshtml" />
+    <Content Include="Views\Admin\EditRequest.cshtml" />
+    <Content Include="Views\Admin\GetAllRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
